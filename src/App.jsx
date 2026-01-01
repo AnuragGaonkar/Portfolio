@@ -199,7 +199,7 @@ function App() {
       title: "Smart Transportation Optimizer",
       status: "live", 
       liveUrl: "https://stepping-stone-solution-lzezabbhmtqpyowvnesj6f.streamlit.app/",
-      architectureImage: "/images/transport.png",
+      architectureImage: "/images/transportation.png",
       description: `Python desktop application using Tkinter and Pillow to solve transportation problems with VAM and Stepping Stone algorithms, optimizing supply allocation for up to four sources and four destinations. Provides a clear GUI for visualizing minimum-cost routes and understanding allocation decisions.`,
       actions: ["live", "algorithm", "demo"],
       actionLabels: { live: "View Live", algorithm: "Algorithm Flow", demo: "Watch Demo" },

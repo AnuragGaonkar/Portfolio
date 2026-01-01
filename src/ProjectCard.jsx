@@ -9,15 +9,15 @@ const STATUS_META = {
 };
 
 const ProjectCard = ({ project, onOpen }) => {
-  const meta = STATUS_META[project.status];
+  const meta = STATUS_META[project.status] || STATUS_META.forging;
 
   const handleActionClick = (action) => {
-    // 🚀 LIVE URL HANDLING - Open in new tab
+    // 🚀 LIVE URL HANDLING - Open external links in a new tab
     if (action === 'live' && project.liveUrl) {
-      window.open(project.liveUrl, '_blank');
+      window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
       return;
     }
-    // All other actions → Open modal
+    // All other actions (architecture, demo, progress, etc.) open the modal
     onOpen(project, action);
   };
 
@@ -30,7 +30,7 @@ const ProjectCard = ({ project, onOpen }) => {
         {meta.label}
       </div>
 
-      <h3>{project.title}</h3>
+      <h3 className="modal-title" style={{ marginTop: '10px' }}>{project.title}</h3>
 
       <p>{project.description}</p>
 
