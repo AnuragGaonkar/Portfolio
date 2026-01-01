@@ -12,6 +12,7 @@ import Carousel from './Carousel';
 function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [formStatus, setFormStatus] = useState('');
+  const [showCertOverlay, setShowCertOverlay] = useState(false);
 
   // ✅ EMAILJS INIT
   useEffect(() => {
@@ -395,46 +396,73 @@ function App() {
             <h2 className="section-title">Hackathons & Certifications</h2>
             
             <div className="projects-grid">
-              {/* Hackathons & Leadership Card */}
+              {/* Hackathons & Leadership Card - Fully Restored Paragraphs */}
               <article className="project-card">
                 <h3>Hackathons & Leadership</h3>
                 <p>
                   Participated in multiple hackathons, securing Top‑5 finishes in
                   three events and a recent Top‑6 placement at Mumbai Hacks 2025
-                  for AI‑driven solutions.
+                  for AI‑driven solutions, learning to ship under pressure and
+                  collaborating across disciplines.
                 </p>
                 <p style={{ marginTop: '1rem' }}>
                   Served as Creatives & Design lead at CSI, TSEC, managing
-                  visual communication for college events.
+                  visual communication for college events and ensuring timely 
+                  delivery of marketing material while coordinating with 
+                  cross‑functional teams.
                 </p>
               </article>
 
-              {/* Certifications Carousel Card */}
+              {/* CLICKABLE CERT BOX - Triggers Carousel Overlay */}
               <article 
-                className="project-card" 
-                style={{ 
-                  overflow: 'visible', // Critical: Allows 3D rotation to show outside card boundaries
-                  display: 'flex', 
-                  flexDirection: 'column' 
-                }}
+                className="project-card cert-box-trigger" 
+                onClick={() => setShowCertOverlay(true)}
+                style={{ cursor: 'pointer' }}
               >
                 <h3>Certifications</h3>
                 <p style={{ fontSize: '0.8rem', color: '#c9a56a', marginBottom: '15px' }}>
-                  Swipe or click indicators to browse
+                  Click box to view gallery
                 </p>
-                
-                {/* Carousel Wrapper */}
-                <div className="carousel-wrapper" style={{ position: 'relative', flex: 1 }}>
-                  <Carousel 
-                    items={certData} 
-                    baseWidth={isMobile ? 300 : 330} 
-                    autoplay={true} 
-                    loop={true} 
-                  />
-                </div>
+                <ul className="cert-list-simple">
+                  <li>Introduction to Data Visualization</li>
+                  <li>Cryptography</li>
+                  <li>Introduction to Cyber Security</li>
+                  <li>Hadoop</li>
+                  <li>RAG & Generative AI</li>
+                </ul>
               </article>
             </div>
           </section>
+
+          {/* CAROUSEL OVERLAY MODAL */}
+          <AnimatePresence>
+            {showCertOverlay && (
+              <motion.div 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
+                className="project-modal-backdrop"
+                onClick={() => setShowCertOverlay(false)}
+                style={{ zIndex: 10000 }}
+              >
+                <motion.div 
+                  initial={{ y: 50, scale: 0.9 }} 
+                  animate={{ y: 0, scale: 1 }} 
+                  exit={{ y: 50, scale: 0.9 }}
+                  className="project-modal cert-carousel-modal" 
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ width: 'auto', maxWidth: '95vw', padding: '40px 20px' }}
+                >
+                  <button className="modal-close" onClick={() => setShowCertOverlay(false)}>×</button>
+                  <h3 className="modal-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    Certifications Gallery
+                  </h3>
+                  {/* baseWidth matches your logic for mobile/desktop */}
+                  <Carousel items={certData} baseWidth={isMobile ? 300 : 400} />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Contact */}
           <section id="contact" className="section section-scroll" data-aos="fade-up">
