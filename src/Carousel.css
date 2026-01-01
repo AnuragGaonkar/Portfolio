@@ -1,3 +1,4 @@
+/* --- Carousel Container --- */
 .carousel-container {
   position: relative;
   overflow: hidden;
@@ -6,12 +7,16 @@
   padding: 16px;
   background: rgba(13, 37, 42, 0.4);
   margin: 0 auto;
+  transition: border-color 0.3s ease;
 }
 
 .carousel-track {
   display: flex;
+  /* Critical for 3D rotation effects */
+  transform-style: preserve-3d; 
 }
 
+/* --- Carousel Individual Item --- */
 .carousel-item {
   position: relative;
   display: flex;
@@ -19,11 +24,14 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  border: 1px solid #555;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   background-color: #0d252a;
   overflow: hidden;
   cursor: grab;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  /* Ensures rotation doesn't get clipped */
+  backface-visibility: hidden; 
 }
 
 .carousel-item:active {
@@ -65,8 +73,10 @@
   font-size: 0.9rem;
   color: #c3cacb;
   margin-bottom: 15px;
+  line-height: 1.4;
 }
 
+/* --- View Image Button --- */
 .cert-view-btn {
   display: inline-block;
   padding: 8px 16px;
@@ -76,19 +86,23 @@
   border-radius: 4px;
   text-decoration: none;
   font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .cert-view-btn:hover {
   background: #c9a56a;
   color: #0d252a;
+  transform: translateY(-2px);
 }
 
+/* --- Indicators --- */
 .carousel-indicators-container {
   display: flex;
   width: 100%;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .carousel-indicators {
@@ -101,25 +115,45 @@
   width: 8px;
   border-radius: 50%;
   cursor: pointer;
-  background-color: #555;
+  background-color: rgba(201, 165, 106, 0.2);
+  transition: background-color 0.3s ease;
 }
 
 .carousel-indicator.active {
   background-color: #c9a56a;
 }
 
+/* --- ✅ FULLSCREEN OVERLAY FIXES --- */
+/* This ensures the image backdrop actually covers the whole screen */
+.image-fullscreen-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.98);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* High Z-index to beat the Cert Gallery Modal */
+  z-index: 15000; 
+  cursor: zoom-out;
+}
+
+.image-fullscreen-content {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+  border: 2px solid #c9a56a;
+  border-radius: 8px;
+  background: #000; /* Prevent background bleeding */
+}
+
+/* --- ✅ MOBILE RESPONSIVENESS (768px and below) --- */
 @media (max-width: 768px) {
   .carousel-container {
-    /* Allow the container to be narrower on small screens */
     width: 100% !important; 
     max-width: 330px;
     padding: 12px;
     border-radius: 18px;
-  }
-
-  .carousel-item {
-    /* Adjust internal spacing for a tighter fit */
-    border-radius: 10px;
   }
 
   .carousel-item-header {
@@ -130,11 +164,6 @@
   .carousel-icon-container {
     height: 35px;
     width: 35px;
-  }
-
-  .carousel-icon {
-    height: 18px;
-    width: 18px;
   }
 
   .carousel-item-content {
@@ -148,24 +177,26 @@
 
   .carousel-item-description {
     font-size: 0.85rem;
-    line-height: 1.4;
     margin-bottom: 12px;
   }
 
   .cert-view-btn {
-    width: 100%; /* Make button full width for easier tapping */
+    width: 100%; 
     text-align: center;
     padding: 10px;
     font-size: 0.85rem;
   }
 
-  .carousel-indicators {
-    gap: 10px;
-    margin-top: 8px;
+  /* Fullscreen adjustments for small screens */
+  .image-fullscreen-content {
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
   }
 }
 
-/* For very small screens (under 350px) */
+/* For very small screens */
 @media (max-width: 350px) {
   .carousel-container {
     max-width: 280px;
