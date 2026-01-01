@@ -98,7 +98,7 @@ function App() {
     };
   }, []);
 
-  // ================= NAV ITEMS =================
+// ================= NAV ITEMS =================
   const navItems = [
     { 
       label: "Journey", 
@@ -113,13 +113,13 @@ function App() {
       links: [{ label: "Martial Arts", href: "#skills" }] 
     },
     { 
-      label: "Quests", 
+      label: "Projects & Research",        
       bgColor: "#1e2d30", 
       textColor: "#c9a56a", 
       links: [{ label: "Projects", href: "#projects" }] 
     },
     { 
-      label: "Research", 
+      label: "Hackathons & Certifications",   
       bgColor: "#081e22", 
       textColor: "#f4f0e8", 
       links: [{ label: "Achievements", href: "#research" }] 
@@ -155,7 +155,7 @@ function App() {
         e.target.reset();
         setTimeout(() => setFormStatus(''), 5000);  // Clear message after 5s
       }, (error) => {
-        setFormStatus('❌ Failed to send. Please try again or email me directly.');
+        setFormStatus('❌ Failed to send. Please try again or email me directly(my email : anuraggaonkar36@gmail.com).');
         console.error('EmailJS error:', error);
       });
   };
@@ -221,7 +221,7 @@ against top-k similar policies and suggests how to resolve overlaps,
 preventing redundant policies from being stored.
       `,
       actions: ["architecture", "progress"], 
-      actionLabels: { architecture: "System Architecture", progress: "Development Progress" },
+      actionLabels: { architecture: "Project Screenshot", progress: "Development Progress" },
       architecture: `
 FAISS vector indexing + LLM drafting pipeline with semantic conflict detection.
       `,
@@ -316,8 +316,8 @@ mask detection on resource-constrained devices.
           <nav className="nav-links">
             <a href="#journey">Journey</a>
             <a href="#skills">Martial Arts</a>
-            <a href="#projects">Quests</a>
-            <a href="#research">Research</a>
+            <a href="#projects">Projects & Research</a>          
+            <a href="#research">Achievements & Certifications</a> 
             <a href="#contact">Tea House</a>
           </nav>
         </header>
@@ -431,7 +431,7 @@ mask detection on resource-constrained devices.
 
           {/* PROJECTS - NEW DYNAMIC CARDS */}
           <section id="projects" className="section section-ink" data-aos="fade-up">
-            <h2 className="section-title">Quests & Legends</h2>
+            <h2 className="section-title">Projects & Research</h2>
             <div className="projects-grid">
               {projects.map((project, idx) => (
                 <ProjectCard 
@@ -445,7 +445,7 @@ mask detection on resource-constrained devices.
 
           {/* Research */}
           <section id="research" className="section section-scroll" data-aos="fade-up">
-            <h2 className="section-title">Research & Achievements</h2>
+            <h2 className="section-title">Hackathons & Certifications</h2>
             <div className="projects-grid">
               <article className="project-card">
                 <h3>Hackathons & Leadership</h3>
@@ -462,6 +462,16 @@ mask detection on resource-constrained devices.
                   cross‑functional teams.
                 </p>
               </article>
+               <article className="project-card">
+                  <h3>Certifications</h3>
+                  <ul className="cert-list">
+                    <li>Introduction to Data Visualization – Certification</li>
+                    <li>Cryptography – Certification</li>
+                    <li>Introduction to Cyber Security – Certification</li>
+                    <li>Hadoop – Certification</li>
+                    <li>RAG & Generative AI – Certification</li>
+                  </ul>
+                </article>
             </div>
           </section>
 
