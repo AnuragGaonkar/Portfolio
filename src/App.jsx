@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -213,13 +214,14 @@ function App() {
       status: "published",
       liveUrl: "https://mask-detection-research-lry6ystaf9q3drfgq3raas.streamlit.app/",
       architectureImage: "/images/research.png", 
-      description: `Lead author of an IEEE-published paper titled "FacialOcclusionNet: A Novel Real Time Face Mask Detection Model", proposing a MobileNet-based architecture tailored for real-time face-mask detection under occlusion. Trained on a curated dataset of 7,553 images and achieved over 99% test accuracy, precision, recall, and F1-score, outperforming a custom CNN baseline. Designed specifically for lightweight edge deployment.`,
+      description: `Lead author of an IEEE-published paper titled "FacialOcclusionNet: A Novel Real Time Face Mask Detection Model", proposing a MobileNet-based architecture tailored for real-time face-mask detection under occlusion. Trained on a curated dataset of 7,553 images and achieved over 99% test accuracy, precision, recall, and F1-score, outperforming a custom CNN baseline and several referenced models. Designed specifically for lightweight edge deployment.`,
       actions: ["live", "paper","demo"],
       actionLabels: { live: "View Live", paper: "Research Overview", demo: "Watch Demo" },
       demo: { enabled: true, mobileVideo: "/videos/research.mp4", desktopVideo: "/videos/research.mp4" },
       paperInfo: `Peer-reviewed IEEE publication focused on efficient CNN design for real-time mask detection on resource-constrained devices.`
     }
   ];
+
   const certData = [
     { title: "Data Visualization", description: "Certification for advanced data plotting and dashboarding.", link: "/certificates/Introduction_to_Data_Visualization.pdf" },
     { title: "Cryptography", description: "Security and encryption protocols certification.", link: "/certificates/Cryptography.pdf" },
@@ -402,40 +404,64 @@ function App() {
                 <p>
                   Participated in multiple hackathons, securing Top‑5 finishes in
                   three events and a recent Top‑6 placement at Mumbai Hacks 2025
-                  for AI‑driven solutions.
+                  for AI‑driven solutions, learning to ship under pressure and
+                  collaborating across disciplines.
                 </p>
                 <p style={{ marginTop: '1rem' }}>
                   Served as Creatives & Design lead at CSI, TSEC, managing
-                  visual communication for college events.
+                  visual communication for college events and ensuring timely 
+                  delivery of marketing material while coordinating with 
+                  cross‑functional teams.
                 </p>
               </article>
 
-              {/* Certifications Carousel Card */}
+              {/* CLICKABLE CERT BOX - Triggers Carousel Overlay */}
               <article 
-                className="project-card" 
-                style={{ 
-                  overflow: 'visible', // Critical: Allows 3D rotation to show outside card boundaries
-                  display: 'flex', 
-                  flexDirection: 'column' 
-                }}
+                className="project-card cert-box-trigger" 
+                onClick={() => setShowCertOverlay(true)}
+                style={{ cursor: 'pointer' }}
               >
                 <h3>Certifications</h3>
                 <p style={{ fontSize: '0.8rem', color: '#c9a56a', marginBottom: '15px' }}>
-                  Swipe or click indicators to browse
+                  Click box to view gallery
                 </p>
-                
-                {/* Carousel Wrapper */}
-                <div className="carousel-wrapper" style={{ position: 'relative', flex: 1 }}>
-                  <Carousel 
-                    items={certData} 
-                    baseWidth={isMobile ? 300 : 330} 
-                    autoplay={true} 
-                    loop={true} 
-                  />
-                </div>
+                <ul className="cert-list-simple">
+                  <li>Introduction to Data Visualization – Certification</li>
+                  <li>Cryptography – Certification</li>
+                  <li>Introduction to Cyber Security – Certification</li>
+                  <li>Hadoop – Certification</li>
+                  <li>RAG & Generative AI – Certification</li>
+                </ul>
               </article>
             </div>
           </section>
+
+          {/* CAROUSEL OVERLAY MODAL */}
+          <AnimatePresence>
+            {showCertOverlay && (
+              <motion.div 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
+                className="project-modal-backdrop"
+                onClick={() => setShowCertOverlay(false)}
+                style={{ zIndex: 10000, position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <motion.div 
+                  initial={{ y: 50, scale: 0.9 }} 
+                  animate={{ y: 0, scale: 1 }} 
+                  exit={{ y: 50, scale: 0.9 }}
+                  className="project-modal cert-carousel-modal" 
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ width: 'auto', maxWidth: '95vw', padding: '40px 20px', backgroundColor: '#0d252a', border: '1px solid #c9a56a', borderRadius: '20px', position: 'relative', overflow: 'visible' }}
+                >
+                  <button className="modal-close" onClick={() => setShowCertOverlay(false)} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', color: 'white', fontSize: '24px', cursor: 'pointer' }}>×</button>
+                  <h3 className="modal-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'white' }}>Certifications Gallery</h3>
+                  <Carousel items={certData} baseWidth={isMobile ? 300 : 400} />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Contact */}
           <section id="contact" className="section section-scroll" data-aos="fade-up">

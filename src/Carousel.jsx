@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import { FiAward, FiMaximize2, FiX } from 'react-icons/fi';
 import './Carousel.css';
@@ -12,7 +12,7 @@ function CarouselItem({ item, index, itemWidth, trackItemOffset, x, transition }
   const outputRange = [90, 0, -90];
   const rotateY = useTransform(x, range, outputRange, { clamp: false });
 
-  // Helper to get JPG path
+  // Convert PDF link to JPG for display
   const imagePath = item.link.replace('.pdf', '.jpg');
 
   return (
@@ -34,31 +34,35 @@ function CarouselItem({ item, index, itemWidth, trackItemOffset, x, transition }
         </div>
       </motion.div>
 
-      {/* Fullscreen Certificate Image Overlay */}
       <AnimatePresence>
         {isFull && (
           <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="image-fullscreen-backdrop" 
             onClick={() => setIsFull(false)}
-            style={{ zIndex: 11000, position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out' }}
+            style={{ 
+              zIndex: 11000, 
+              position: 'fixed', 
+              inset: 0, 
+              backgroundColor: 'rgba(0,0,0,0.95)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              cursor: 'zoom-out'
+            }}
           >
             <motion.img 
-              initial={{ scale: 0.8 }} 
-              animate={{ scale: 1 }} 
-              exit={{ scale: 0.8 }}
+              initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}
               src={imagePath} 
-              alt="Certificate Full View"
+              alt="Certificate" 
               style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', border: '2px solid #c9a56a', borderRadius: '8px' }}
             />
             <button 
-                className="modal-close" 
-                onClick={() => setIsFull(false)} 
-                style={{ position: 'absolute', top: '20px', right: '40px', background: 'none', border: 'none', color: 'white', fontSize: '30px', cursor: 'pointer' }}
+              className="modal-close" 
+              onClick={(e) => { e.stopPropagation(); setIsFull(false); }} 
+              style={{ position: 'absolute', top: '20px', right: '40px', color: 'white', border: 'none', background: 'none', fontSize: '32px', cursor: 'pointer' }}
             >
-                <FiX />
+              <FiX />
             </button>
           </motion.div>
         )}
@@ -102,7 +106,7 @@ export default function Carousel({ items, baseWidth = 330, autoplay = true, auto
   const activeIndex = loop ? (position - 1 + items.length) % items.length : position;
 
   return (
-    <div className="carousel-container" style={{ width: `100%`, maxWidth: `${baseWidth}px`, height: '350px' }}>
+    <div className="carousel-container" style={{ width: '100%', maxWidth: `${baseWidth}px`, height: '350px' }}>
       <motion.div
         className="carousel-track"
         style={{ width: itemWidth, gap: `${GAP}px`, perspective: 1000, x }}
