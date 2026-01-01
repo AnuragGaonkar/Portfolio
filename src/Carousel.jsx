@@ -12,6 +12,9 @@ function CarouselItem({ item, index, itemWidth, trackItemOffset, x, transition }
   const outputRange = [90, 0, -90];
   const rotateY = useTransform(x, range, outputRange, { clamp: false });
 
+  // Helper to get JPG path
+  const imagePath = item.link.replace('.pdf', '.jpg');
+
   return (
     <>
       <motion.div
@@ -35,18 +38,28 @@ function CarouselItem({ item, index, itemWidth, trackItemOffset, x, transition }
       <AnimatePresence>
         {isFull && (
           <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
             className="image-fullscreen-backdrop" 
             onClick={() => setIsFull(false)}
-            style={{ zIndex: 11000 }}
+            style={{ zIndex: 11000, position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out' }}
           >
             <motion.img 
-              initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}
-              src={item.link.replace('.pdf', '.jpg')} 
-              className="image-fullscreen-content" 
-              alt="Certificate" 
+              initial={{ scale: 0.8 }} 
+              animate={{ scale: 1 }} 
+              exit={{ scale: 0.8 }}
+              src={imagePath} 
+              alt="Certificate Full View"
+              style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', border: '2px solid #c9a56a', borderRadius: '8px' }}
             />
-            <button className="modal-close" onClick={() => setIsFull(false)} style={{top: '20px', right: '20px'}}><FiX /></button>
+            <button 
+                className="modal-close" 
+                onClick={() => setIsFull(false)} 
+                style={{ position: 'absolute', top: '20px', right: '40px', background: 'none', border: 'none', color: 'white', fontSize: '30px', cursor: 'pointer' }}
+            >
+                <FiX />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

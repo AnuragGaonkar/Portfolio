@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -98,36 +99,11 @@ function App() {
 
   // ================= NAV ITEMS =================
   const navItems = [
-    { 
-      label: "Journey", 
-      bgColor: "#0d252a", 
-      textColor: "#f4f0e8", 
-      links: [{ label: "The Wanderer", href: "#journey" }] 
-    },
-    { 
-      label: "Skills", 
-      bgColor: "#102f33", 
-      textColor: "#c3cacb", 
-      links: [{ label: "Martial Arts", href: "#skills" }] 
-    },
-    { 
-      label: "Projects & Research",        
-      bgColor: "#1e2d30", 
-      textColor: "#c9a56a", 
-      links: [{ label: "Projects", href: "#projects" }] 
-    },
-    { 
-      label: "Hackathons & Certifications",   
-      bgColor: "#081e22", 
-      textColor: "#f4f0e8", 
-      links: [{ label: "Achievements", href: "#research" }] 
-    },
-    { 
-      label: "Tea House", 
-      bgColor: "#071b20", 
-      textColor: "#f7f5ee", 
-      links: [{ label: "Contact Me", href: "#contact" }] 
-    }
+    { label: "Journey", bgColor: "#0d252a", textColor: "#f4f0e8", links: [{ label: "The Wanderer", href: "#journey" }] },
+    { label: "Skills", bgColor: "#102f33", textColor: "#c3cacb", links: [{ label: "Martial Arts", href: "#skills" }] },
+    { label: "Projects & Research", bgColor: "#1e2d30", textColor: "#c9a56a", links: [{ label: "Projects", href: "#projects" }] },
+    { label: "Hackathons & Certifications", bgColor: "#081e22", textColor: "#f4f0e8", links: [{ label: "Achievements", href: "#research" }] },
+    { label: "Tea House", bgColor: "#071b20", textColor: "#f7f5ee", links: [{ label: "Contact Me", href: "#contact" }] }
   ];
 
   // ================= PROJECT MODAL STATE =================
@@ -153,12 +129,12 @@ function App() {
         e.target.reset();
         setTimeout(() => setFormStatus(''), 5000);
       }, (error) => {
-        setFormStatus('❌ Failed to send. Please try again or email me directly(my email : anuraggaonkar36@gmail.com).');
+        setFormStatus('❌ Failed to send. Please try again or email me directly.');
         console.error('EmailJS error:', error);
       });
   };
 
-  // ================= PROJECT DATA =================
+  // ================= DATA =================
   const projects = [
     {
       title: "Medi-Quick Platform",
@@ -179,7 +155,7 @@ function App() {
       actions: ["demo", "architecture"],
       actionLabels: { demo: "Watch Demo", architecture: "Model Pipeline" },
       demo: { enabled: true, mobileVideo: "/videos/mediscan.mp4", desktopVideo: "/videos/mediscan.mp4" },
-      architecture: `PyTorch CNN pipeline with controlled inference, designed strictly for local execution to prevent public misuse of medical predictions.`
+      architecture: `PyTorch CNN pipeline with controlled inference, designed strictly for local execution.`
     },
     {
       title: "Policy Drafting Agent",
@@ -213,13 +189,14 @@ function App() {
       status: "published",
       liveUrl: "https://mask-detection-research-lry6ystaf9q3drfgq3raas.streamlit.app/",
       architectureImage: "/images/research.png", 
-      description: `Lead author of an IEEE-published paper titled "FacialOcclusionNet: A Novel Real Time Face Mask Detection Model", proposing a MobileNet-based architecture tailored for real-time face-mask detection under occlusion. Trained on a curated dataset of 7,553 images and achieved over 99% test accuracy, precision, recall, and F1-score, outperforming a custom CNN baseline. Designed specifically for lightweight edge deployment.`,
+      description: `Lead author of an IEEE-published paper titled "FacialOcclusionNet: A Novel Real Time Face Mask Detection Model", proposing a MobileNet-based architecture tailored for real-time face-mask detection under occlusion. Trained on a curated dataset of 7,553 images and achieved over 99% test accuracy, precision, recall, and F1-score, outperforming a custom CNN baseline and several referenced models. Designed specifically for lightweight edge deployment so it can run in real-time on resource-constrained devices in crowded environments.`,
       actions: ["live", "paper","demo"],
       actionLabels: { live: "View Live", paper: "Research Overview", demo: "Watch Demo" },
       demo: { enabled: true, mobileVideo: "/videos/research.mp4", desktopVideo: "/videos/research.mp4" },
       paperInfo: `Peer-reviewed IEEE publication focused on efficient CNN design for real-time mask detection on resource-constrained devices.`
     }
   ];
+
   const certData = [
     { title: "Data Visualization", description: "Certification for advanced data plotting and dashboarding.", link: "/certificates/Introduction_to_Data_Visualization.pdf" },
     { title: "Cryptography", description: "Security and encryption protocols certification.", link: "/certificates/Cryptography.pdf" },
@@ -240,7 +217,7 @@ function App() {
         />
       )}
 
-      {/* PAGE 1: full-screen profile cover */}
+      {/* PAGE 1: Profile Cover */}
       <section className="page profile-page transition-shell">
         <div className="profile-page-inner">
           <ProfileCard
@@ -257,14 +234,14 @@ function App() {
         </div>
       </section>
 
-      {/* PAGE 2: main site / portfolio */}
+      {/* PAGE 2: Main Content */}
       <section className="page portfolio-page" id="portfolio-root">
         <header className="top-nav desktop-only-nav">
           <div className="nav-logo">My Portfolio</div>
           <nav className="nav-links">
             <a href="#journey">Journey</a>
             <a href="#skills">Skills</a>
-            <a href="#projects">Projects & Research</a>          
+            <a href="#projects">Projects & Research</a>
             <a href="#research">Achievements & Certifications</a> 
             <a href="#contact">Tea House</a>
           </nav>
@@ -274,9 +251,7 @@ function App() {
           {/* HERO */}
           <section className="hero-section">
             <div className="hero-left">
-              <h1 className="hero-title" data-aos="fade-right">
-                Anurag Gaonkar
-              </h1>
+              <h1 className="hero-title" data-aos="fade-right">Anurag Gaonkar</h1>
               <p className="hero-subtitle" data-aos="fade-right" data-aos-delay="150">
                 Final‑year Artificial Intelligence and Data Science engineer,
                 blending full‑stack development with AI integration to build
@@ -284,34 +259,16 @@ function App() {
                 real‑world deployment.
               </p>
               <div className="hero-actions" data-aos="fade-right" data-aos-delay="250">
-                <a href="#projects" className="btn primary-btn">
-                  View Quests
-                </a>
-                <a href="#contact" className="btn ghost-btn">
-                  Contact
-                </a>
+                <a href="#projects" className="btn primary-btn">View Quests</a>
+                <a href="#contact" className="btn ghost-btn">Contact</a>
               </div>
             </div>
-
             <div className="hero-profile-wrapper" data-aos="fade-left" data-aos-delay="150">
-              <TiltedCard
-                imageSrc="/profile.png"
-                altText="Anurag Gaonkar"
-                captionText="Anurag Gaonkar"
-                containerHeight="340px"
-                containerWidth="280px"
-                imageHeight="340px"
-                imageWidth="280px"
-                rotateAmplitude={10}
-                scaleOnHover={1.05}
-                showMobileWarning={false}
-                showTooltip={true}
-                displayOverlayContent={false}
-              />
+              <TiltedCard imageSrc="/profile.png" altText="Anurag Gaonkar" containerHeight="340px" containerWidth="280px" rotateAmplitude={10} scaleOnHover={1.05} />
             </div>
           </section>
 
-          {/* Journey Section (Restored) */}
+          {/* Journey */}
           <section id="journey" className="section section-ink" data-aos="fade-up">
             <h2 className="section-title">The Wanderer's Journey</h2>
             <p className="section-text">
@@ -333,8 +290,7 @@ function App() {
               On the AI side, I work extensively with Python, PyTorch, and more
               recently LLMs, RAG architectures, and GenAI frameworks. I enjoy
               architecting end‑to‑end solutions where intelligent backends and
-              user‑centric frontends are designed together rather than in
-              isolation.
+              user‑centric frontends are designed together rather than in isolation.
             </p>
           </section>
 
@@ -344,35 +300,19 @@ function App() {
             <div className="skills-grid">
               <div className="skill-card">
                 <h3>Languages</h3>
-                <ul>
-                  <li>Python, Java, JavaScript</li>
-                  <li>SQL</li>
-                </ul>
+                <ul><li>Python, Java, JavaScript</li><li>SQL</li></ul>
               </div>
               <div className="skill-card">
                 <h3>Web & Backend</h3>
-                <ul>
-                  <li>React.js, Node.js, Express.js</li>
-                  <li>REST APIs, JSON</li>
-                  <li>Authentication & Authorization (JWT, RBAC)</li>
-                  <li>Spring Boot</li>
-                </ul>
+                <ul><li>React.js, Node.js, Express.js</li><li>REST APIs, Authentication (JWT)</li><li>Spring Boot</li></ul>
               </div>
               <div className="skill-card">
                 <h3>Data & AI</h3>
-                <ul>
-                  <li>PyTorch, Computer Vision</li>
-                  <li>LLMs, RAG, LangChain</li>
-                  <li>Model evaluation & deployment</li>
-                </ul>
+                <ul><li>PyTorch, Computer Vision</li><li>LLMs, RAG, LangChain</li><li>Model evaluation & deployment</li></ul>
               </div>
               <div className="skill-card">
                 <h3>Databases & Tools</h3>
-                <ul>
-                  <li>MongoDB, MySQL, Oracle, SQLite</li>
-                  <li>GitHub, Firebase, Postman</li>
-                  <li>Hackathons & team collaboration</li>
-                </ul>
+                <ul><li>MongoDB, MySQL, SQLite</li><li>GitHub, Postman, Firebase</li></ul>
               </div>
             </div>
           </section>
@@ -382,11 +322,7 @@ function App() {
             <h2 className="section-title">Projects & Research</h2>
             <div className="projects-grid">
               {projects.map((project, idx) => (
-                <ProjectCard 
-                  key={idx} 
-                  project={project} 
-                  onOpen={openProjectModal} 
-                />
+                <ProjectCard key={idx} project={project} onOpen={openProjectModal} />
               ))}
             </div>
           </section>
@@ -394,9 +330,8 @@ function App() {
           {/* RESEARCH, HACKATHONS & CERTIFICATIONS */}
           <section id="research" className="section section-scroll" data-aos="fade-up">
             <h2 className="section-title">Hackathons & Certifications</h2>
-            
             <div className="projects-grid">
-              {/* Hackathons & Leadership Card - Fully Restored Paragraphs */}
+              {/* Hackathons Card - Fully Restored Content */}
               <article className="project-card">
                 <h3>Hackathons & Leadership</h3>
                 <p>
@@ -413,22 +348,20 @@ function App() {
                 </p>
               </article>
 
-              {/* CLICKABLE CERT BOX - Triggers Carousel Overlay */}
+              {/* Certifications Card - Clickable Trigger */}
               <article 
                 className="project-card cert-box-trigger" 
                 onClick={() => setShowCertOverlay(true)}
                 style={{ cursor: 'pointer' }}
               >
                 <h3>Certifications</h3>
-                <p style={{ fontSize: '0.8rem', color: '#c9a56a', marginBottom: '15px' }}>
-                  Click box to view gallery
-                </p>
+                <p style={{ fontSize: '0.8rem', color: '#c9a56a', marginBottom: '15px' }}>Click box to view gallery</p>
                 <ul className="cert-list-simple">
-                  <li>Introduction to Data Visualization</li>
-                  <li>Cryptography</li>
-                  <li>Introduction to Cyber Security</li>
-                  <li>Hadoop</li>
-                  <li>RAG & Generative AI</li>
+                  <li>Introduction to Data Visualization – Certification</li>
+                  <li>Cryptography – Certification</li>
+                  <li>Introduction to Cyber Security – Certification</li>
+                  <li>Hadoop – Certification</li>
+                  <li>RAG & Generative AI – Certification</li>
                 </ul>
               </article>
             </div>
@@ -443,7 +376,7 @@ function App() {
                 exit={{ opacity: 0 }}
                 className="project-modal-backdrop"
                 onClick={() => setShowCertOverlay(false)}
-                style={{ zIndex: 10000 }}
+                style={{ zIndex: 10000, position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
                 <motion.div 
                   initial={{ y: 50, scale: 0.9 }} 
@@ -451,13 +384,10 @@ function App() {
                   exit={{ y: 50, scale: 0.9 }}
                   className="project-modal cert-carousel-modal" 
                   onClick={(e) => e.stopPropagation()}
-                  style={{ width: 'auto', maxWidth: '95vw', padding: '40px 20px' }}
+                  style={{ width: 'auto', maxWidth: '95vw', padding: '40px 20px', backgroundColor: '#0d252a', border: '1px solid #c9a56a', borderRadius: '20px', position: 'relative' }}
                 >
-                  <button className="modal-close" onClick={() => setShowCertOverlay(false)}>×</button>
-                  <h3 className="modal-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
-                    Certifications Gallery
-                  </h3>
-                  {/* baseWidth matches your logic for mobile/desktop */}
+                  <button className="modal-close" onClick={() => setShowCertOverlay(false)} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', color: 'white', fontSize: '24px', cursor: 'pointer' }}>×</button>
+                  <h3 className="modal-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'white' }}>Certifications Gallery</h3>
                   <Carousel items={certData} baseWidth={isMobile ? 300 : 400} />
                 </motion.div>
               </motion.div>
@@ -467,49 +397,22 @@ function App() {
           {/* Contact */}
           <section id="contact" className="section section-scroll" data-aos="fade-up">
             <h2 className="section-title">The Tea House</h2>
-            <p className="section-text">
-              For roles involving full‑stack development, AI integration, or
-              applied research, feel free to reach out.
-            </p>
-
             <form className="contact-form" onSubmit={sendEmail}>
-              <div className="form-row">
-                <label htmlFor="user_name">Name</label>
-                <input id="user_name" name="user_name" type="text" required />
-              </div>
-              <div className="form-row">
-                <label htmlFor="user_email">Email</label>
-                <input id="user_email" name="user_email" type="email" required />
-              </div>
-              <div className="form-row">
-                <label htmlFor="message">Message</label>
-                <textarea id="message" name="message" rows="4" required />
-              </div>
-              <button type="submit" className="btn primary-btn wind-hover">
-                Send Message
-              </button>
-              {formStatus && (
-                <p className={`form-status ${formStatus.includes('✅') ? 'success' : 'error'}`}>
-                  {formStatus}
-                </p>
-              )}
+              <div className="form-row"><label htmlFor="user_name">Name</label><input id="user_name" name="user_name" type="text" required /></div>
+              <div className="form-row"><label htmlFor="user_email">Email</label><input id="user_email" name="user_email" type="email" required /></div>
+              <div className="form-row"><label htmlFor="message">Message</label><textarea id="message" name="message" rows="4" required /></div>
+              <button type="submit" className="btn primary-btn wind-hover">Send Message</button>
+              {formStatus && <p className={`form-status ${formStatus.includes('✅') ? 'success' : 'error'}`}>{formStatus}</p>}
             </form>
           </section>
 
           <footer className="page-footer">
-            <span>
-              © {new Date().getFullYear()} Anurag Gaonkar • AI & Full‑Stack Engineering.
-            </span>
+            <span>© {new Date().getFullYear()} Anurag Gaonkar • AI & Full‑Stack Engineering.</span>
           </footer>
         </main>
 
-        {/* PROJECT MODAL */}
         {activeProject && (
-          <ProjectModal
-            project={activeProject}
-            action={activeAction}
-            onClose={closeProjectModal}
-          />
+          <ProjectModal project={activeProject} action={activeAction} onClose={closeProjectModal} />
         )}
       </section>
     </div>
