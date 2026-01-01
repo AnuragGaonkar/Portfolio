@@ -1,0 +1,173 @@
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #c9a56a;
+  border-radius: 24px;
+  padding: 16px;
+  background: rgba(13, 37, 42, 0.4);
+  margin: 0 auto;
+}
+
+.carousel-track {
+  display: flex;
+}
+
+.carousel-item {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1px solid #555;
+  border-radius: 12px;
+  background-color: #0d252a;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.carousel-item:active {
+  cursor: grabbing;
+}
+
+.carousel-item-header {
+  padding: 20px;
+}
+
+.carousel-icon-container {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #c9a56a;
+}
+
+.carousel-icon {
+  height: 20px;
+  width: 20px;
+  color: #0d252a;
+}
+
+.carousel-item-content {
+  padding: 20px;
+}
+
+.carousel-item-title {
+  margin-bottom: 8px;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #f4f0e8;
+}
+
+.carousel-item-description {
+  font-size: 0.9rem;
+  color: #c3cacb;
+  margin-bottom: 15px;
+}
+
+.cert-view-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #c9a56a;
+  color: #c9a56a;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.cert-view-btn:hover {
+  background: #c9a56a;
+  color: #0d252a;
+}
+
+.carousel-indicators-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.carousel-indicators {
+  display: flex;
+  gap: 12px;
+}
+
+.carousel-indicator {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #555;
+}
+
+.carousel-indicator.active {
+  background-color: #c9a56a;
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    /* Allow the container to be narrower on small screens */
+    width: 100% !important; 
+    max-width: 330px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .carousel-item {
+    /* Adjust internal spacing for a tighter fit */
+    border-radius: 10px;
+  }
+
+  .carousel-item-header {
+    padding: 15px;
+    margin-bottom: 8px;
+  }
+
+  .carousel-icon-container {
+    height: 35px;
+    width: 35px;
+  }
+
+  .carousel-icon {
+    height: 18px;
+    width: 18px;
+  }
+
+  .carousel-item-content {
+    padding: 15px;
+  }
+
+  .carousel-item-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+
+  .carousel-item-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .cert-view-btn {
+    width: 100%; /* Make button full width for easier tapping */
+    text-align: center;
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .carousel-indicators {
+    gap: 10px;
+    margin-top: 8px;
+  }
+}
+
+/* For very small screens (under 350px) */
+@media (max-width: 350px) {
+  .carousel-container {
+    max-width: 280px;
+  }
+}

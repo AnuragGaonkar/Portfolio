@@ -7,6 +7,7 @@ import ProfileCard from "./ProfileCard.jsx";
 import CardNav from "./CardNav.jsx";
 import ProjectCard from "./ProjectCard.jsx";
 import ProjectModal from "./ProjectModal.jsx";
+import Carousel from './Carousel';
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -218,6 +219,13 @@ function App() {
       paperInfo: `Peer-reviewed IEEE publication focused on efficient CNN design for real-time mask detection on resource-constrained devices.`
     }
   ];
+  const certData = [
+    { title: "Data Visualization", description: "Certification for advanced data plotting and dashboarding.", link: "/certificates/Introduction_to_Data_Visualization.pdf" },
+    { title: "Cryptography", description: "Security and encryption protocols certification.", link: "/certificates/Cryptography.pdf" },
+    { title: "Cyber Security", description: "Network security and threat mitigation certification.", link: "/certificates/Intro_to_cyber_security.pdf" },
+    { title: "Hadoop", description: "Big data processing and distributed computing.", link: "/certificates/Hadoop_Certification.pdf" },
+    { title: "RAG & GenAI", description: "Advanced Retrieval Augmented Generation and LLMs.", link: "/certificates/Rag.pdf" },
+  ];
 
   return (
     <div className="page-root">
@@ -254,7 +262,7 @@ function App() {
           <div className="nav-logo">My Portfolio</div>
           <nav className="nav-links">
             <a href="#journey">Journey</a>
-            <a href="#skills">Martial Arts</a>
+            <a href="#skills">Skills</a>
             <a href="#projects">Projects & Research</a>          
             <a href="#research">Achievements & Certifications</a> 
             <a href="#contact">Tea House</a>
@@ -331,7 +339,7 @@ function App() {
 
           {/* Skills */}
           <section id="skills" className="section section-scroll" data-aos="fade-up">
-            <h2 className="section-title">Martial Arts & Skills</h2>
+            <h2 className="section-title">Skills</h2>
             <div className="skills-grid">
               <div className="skill-card">
                 <h3>Languages</h3>
@@ -382,10 +390,12 @@ function App() {
             </div>
           </section>
 
-          {/* Achievements & Certifications (Updated with PDF Links) */}
+          {/* RESEARCH, HACKATHONS & CERTIFICATIONS */}
           <section id="research" className="section section-scroll" data-aos="fade-up">
             <h2 className="section-title">Hackathons & Certifications</h2>
+            
             <div className="projects-grid">
+              {/* Hackathons & Leadership Card */}
               <article className="project-card">
                 <h3>Hackathons & Leadership</h3>
                 <p>
@@ -393,22 +403,36 @@ function App() {
                   three events and a recent Top‑6 placement at Mumbai Hacks 2025
                   for AI‑driven solutions.
                 </p>
-                <p>
+                <p style={{ marginTop: '1rem' }}>
                   Served as Creatives & Design lead at CSI, TSEC, managing
                   visual communication for college events.
                 </p>
               </article>
-               <article className="project-card">
-                  <h3>Certifications</h3>
-                  <p style={{fontSize: '0.8rem', color: '#c9a56a', marginBottom: '10px'}}>Click to view certificate</p>
-                  <ul className="cert-list">
-                    <li><a href="/certificates/Introduction_to_Data_Visualization.pdf" target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>Introduction to Data Visualization ↗</a></li>
-                    <li><a href="/certificates/Cryptography.pdf" target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>Cryptography ↗</a></li>
-                    <li><a href="/certificates/Intro_to_cyber_security.pdf" target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>Introduction to Cyber Security ↗</a></li>
-                    <li><a href="/certificates/Hadoop_Certification.pdf" target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>Hadoop ↗</a></li>
-                    <li><a href="/certificates/Rag.pdf" target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>RAG & Generative AI ↗</a></li>
-                  </ul>
-                </article>
+
+              {/* Certifications Carousel Card */}
+              <article 
+                className="project-card" 
+                style={{ 
+                  overflow: 'visible', // Critical: Allows 3D rotation to show outside card boundaries
+                  display: 'flex', 
+                  flexDirection: 'column' 
+                }}
+              >
+                <h3>Certifications</h3>
+                <p style={{ fontSize: '0.8rem', color: '#c9a56a', marginBottom: '15px' }}>
+                  Swipe or click indicators to browse
+                </p>
+                
+                {/* Carousel Wrapper */}
+                <div className="carousel-wrapper" style={{ position: 'relative', flex: 1 }}>
+                  <Carousel 
+                    items={certData} 
+                    baseWidth={isMobile ? 300 : 330} 
+                    autoplay={true} 
+                    loop={true} 
+                  />
+                </div>
+              </article>
             </div>
           </section>
 
