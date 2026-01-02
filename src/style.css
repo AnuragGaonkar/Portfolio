@@ -719,7 +719,7 @@ main {
     align-items: center;
     /* Distributes space so buttons sit at the bottom */
     justify-content: space-between; 
-    gap: 1rem;
+    gap: 0.5rem;
   }
   /* Smooth portfolio scroll */
   .portfolio-page {
@@ -872,7 +872,7 @@ main {
     order: 1 !important; 
     display: flex;
     justify-content: center;
-    transform: scale(0.9); /* Keeps it from crowding the screen */
+    transform: scale(0.8); /* Keeps it from crowding the screen */
     margin: 0;
   }
   /* Force content above fold */
@@ -1088,7 +1088,7 @@ main {
 @media (max-width: 640px) {
   .hero-title {
     font-size: 2rem; /* Make title slightly smaller on mobile */
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
   }
   .hero-subtitle {
     font-size: 0.9rem;
