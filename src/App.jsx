@@ -37,6 +37,19 @@ function App() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  useEffect(() => {
+    const isMobileDevice = window.innerWidth <= 640;
+    if (!isMobileDevice) return;
+
+    // Show the hint only if they haven't scrolled yet after 1.5s
+    const timer = setTimeout(() => {
+      if (window.scrollY < 10 && !hasScrolled && hintRef.current) {
+        hintRef.current.style.opacity = "1";
+      }
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [hasScrolled]);
   // ================= PAGE TRANSITION + NAV CONTROL =================
   useEffect(() => {
     const root = document.querySelector(".page-root");
@@ -101,38 +114,7 @@ function App() {
       window.removeEventListener("resize", triggerAnimations);
     };
   }, []);
-  // Add this state to track if the user has EVER scrolled
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 640;
-    if (!isMobile) return;
-
-    // Show the hint only if they haven't scrolled yet
-    const timer = setTimeout(() => {
-      if (window.scrollY < 10 && !hasScrolled && hintRef.current) {
-        hintRef.current.style.opacity = "1";
-      }
-    }, 1500);
-
-    const handleScrollHide = () => {
-      if (window.scrollY > 10) {
-        setHasScrolled(true); // Mark as scrolled
-        if (hintRef.current) {
-          hintRef.current.style.opacity = "0";
-          hintRef.current.style.pointerEvents = "none";
-        }
-        // Once hidden, we can remove this specific listener
-        window.removeEventListener("scroll", handleScrollHide);
-      }
-    };
-
-    window.addEventListener("scroll", handleScrollHide, { passive: true });
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", handleScrollHide);
-    };
-  }, [hasScrolled]);
+ 
   // ================= NAV ITEMS =================
   const navItems = [
     { 
@@ -290,7 +272,7 @@ function App() {
       <div 
         ref={hintRef} 
         className="global-scroll-hint"
-        style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+        style={{ opacity: 0, transition: 'opacity 0.5s ease', pointerEvents: 'none' }}
       >
         <span>Scroll Down</span>
         <div className="arrow">▾</div>
