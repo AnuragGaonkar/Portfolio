@@ -14,6 +14,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [formStatus, setFormStatus] = useState('');
   const [showCertOverlay, setShowCertOverlay] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const hintRef = useRef(null);
   // ✅ EMAILJS INIT
   useEffect(() => {
