@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import AOS from "aos";
@@ -14,8 +14,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [formStatus, setFormStatus] = useState('');
   const [showCertOverlay, setShowCertOverlay] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const hintRef = useRef(null);
+
   // ✅ EMAILJS INIT
   useEffect(() => {
     emailjs.init('112QULphEAjJAlwB3');
@@ -38,19 +37,6 @@ function App() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  useEffect(() => {
-    const isMobileDevice = window.innerWidth <= 640;
-    if (!isMobileDevice) return;
-
-    // Show the hint only if they haven't scrolled yet after 1.5s
-    const timer = setTimeout(() => {
-      if (window.scrollY < 10 && !hasScrolled && hintRef.current) {
-        hintRef.current.style.opacity = "1";
-      }
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [hasScrolled]);
   // ================= PAGE TRANSITION + NAV CONTROL =================
   useEffect(() => {
     const root = document.querySelector(".page-root");
@@ -60,11 +46,6 @@ function App() {
       if (!root || isTransitioning) return;
       const y = window.scrollY;
       const vh = window.innerHeight;
-
-      if (y > 2 && hintRef.current) {
-        hintRef.current.style.opacity = "0";
-        setHasScrolled(true); // This prevents the timer from ever showing it again
-      }
 
       if (y > 5 && !root.classList.contains("letter-opened")) {
         isTransitioning = true;
@@ -115,7 +96,7 @@ function App() {
       window.removeEventListener("resize", triggerAnimations);
     };
   }, []);
- 
+
   // ================= NAV ITEMS =================
   const navItems = [
     { 
@@ -248,16 +229,6 @@ function App() {
     { title: "Hadoop", description: "Big data processing and distributed computing.", link: "/certificates/Hadoop_Certification.pdf" },
     { title: "RAG & GenAI", description: "Advanced Retrieval Augmented Generation and LLMs.", link: "/certificates/Rag.pdf" },
   ];
-  useEffect(() => {
-    // Show hint only if we are on the landing page (top of the site)
-    if (window.scrollY < 10 && window.innerWidth <= 640) {
-      const timer = setTimeout(() => setShowGlobalHint(true), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  // Add this to your onScroll function inside App.jsx to hide it when user moves
-  if (window.scrollY > 20) setShowGlobalHint(false);
 
   return (
     <div className="page-root">
@@ -270,14 +241,7 @@ function App() {
           className="mobile-card-nav"
         />
       )}
-      <div 
-        ref={hintRef} 
-        className="global-scroll-hint"
-        style={{ opacity: 0, transition: 'opacity 0.5s ease', pointerEvents: 'none' }}
-      >
-        <span>Scroll Down</span>
-        <div className="arrow">▾</div>
-      </div>
+
       {/* PAGE 1: full-screen profile cover */}
       <section className="page profile-page transition-shell">
         <div className="profile-page-inner">
