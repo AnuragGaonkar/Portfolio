@@ -50,6 +50,7 @@ function App() {
       if (y > 5 && !root.classList.contains("letter-opened")) {
         isTransitioning = true;
         root.classList.add("letter-opened");
+        setShowGlobalHint(false);
         window.scrollTo({
           top: vh,
           behavior: 'smooth'
@@ -251,7 +252,7 @@ function App() {
           className="mobile-card-nav"
         />
       )}
-      {showGlobalHint && (
+      {showGlobalHint && !document.querySelector('.page-root')?.classList.contains('letter-opened') && (
         <div className="global-scroll-hint">
           <span>Scroll Down</span>
           <div className="arrow">▾</div>
