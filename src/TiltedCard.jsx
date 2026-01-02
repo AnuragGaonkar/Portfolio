@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion'; // Ensure you use 'framer-motion' or 'motion/react'
 import './TiltedCard.css';
 
 const springValues = {
@@ -18,17 +18,17 @@ export default function TiltedCard({
   imageWidth = '300px',
   scaleOnHover = 1.1,
   rotateAmplitude = 14,
-  showMobileWarning = true,
+  showMobileWarning = false, // Set to false if you want the hint instead
   showTooltip = true,
   overlayContent = null,
   displayOverlayContent = false
 }) {
   const ref = useRef(null);
 
-  const x = useMotionValue();
-  const y = useMotionValue();
-  const rotateX = useSpring(useMotionValue(0), springValues);
-  const rotateY = useSpring(useMotionValue(0), springValues);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(0, springValues);
+  const rotateY = useSpring(0, springValues);
   const scale = useSpring(1, springValues);
   const opacity = useSpring(0);
   const rotateFigcaption = useSpring(0, {
@@ -38,6 +38,7 @@ export default function TiltedCard({
   });
 
   const [lastY, setLastY] = useState(0);
+  const [showScrollHint, setShowScrollHint] = useState(false);
 
   function handleMouse(e) {
     if (!ref.current) return;
@@ -73,20 +74,42 @@ export default function TiltedCard({
     rotateFigcaption.set(0);
   }
 
+  useEffect(() => {
+    // Check if mobile
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    if (!isMobile) return;
+
+    const timer = setTimeout(() => {
+      setShowScrollHint(true);
+    }, 2500);
+
+    // Hide hint if user starts scrolling
+    const handleScroll = () => setShowScrollHint(false);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <figure
       ref={ref}
       className="tilted-card-figure"
       style={{
         height: containerHeight,
-        width: containerWidth
+        width: containerWidth,
+        position: 'relative' // Needed for absolute hint positioning
       }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {showMobileWarning && (
-        <div className="tilted-card-mobile-alert">This effect is not optimized for mobile. Check on desktop.</div>
+        <div className="tilted-card-mobile-alert">
+          This effect is not optimized for mobile.
+        </div>
       )}
 
       <motion.div
@@ -96,7 +119,10 @@ export default function TiltedCard({
           height: imageHeight,
           rotateX,
           rotateY,
-          scale
+          scale,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}
       >
         <motion.img
@@ -105,19 +131,31 @@ export default function TiltedCard({
           className="tilted-card-img"
           style={{
             width: imageWidth,
-            height: imageHeight
+            height: imageHeight,
+            objectFit: 'cover'
           }}
         />
 
         {displayOverlayContent && overlayContent && (
-          <motion.div className="tilted-card-overlay">{overlayContent}</motion.div>
+          <motion.div className="tilted-card-overlay">
+            {overlayContent}
+          </motion.div>
         )}
       </motion.div>
+
+      {showScrollHint && (
+        <div className="tilted-card-scroll-hint">
+          <span>Scroll down</span>
+          <span className="arrow">▾</span>
+        </div>
+      )}
 
       {showTooltip && (
         <motion.figcaption
           className="tilted-card-caption"
           style={{
+            position: 'absolute',
+            pointerEvents: 'none',
             x,
             y,
             opacity,

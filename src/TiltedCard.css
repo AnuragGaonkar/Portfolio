@@ -79,3 +79,67 @@
   white-space: nowrap;
 }
 
+/* ... keep your existing TiltedCard.css above this ... */
+
+/* Add to end of TiltedCard.css - Mobile scroll hint only */
+.tilted-card-scroll-hint {
+  display: none; /* Hidden on desktop */
+  position: absolute;
+  left: 50%;
+  bottom: -32px; /* hangs below card */
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #f4f0e8;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: scrollHintShow 0.4s ease-out 0.2s forwards,
+             scrollHintPulse 1.8s ease-in-out infinite 0.6s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tilted-card-scroll-hint .arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Mobile only */
+@media (max-width: 640px) {
+  .tilted-card-scroll-hint {
+    display: flex;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .tilted-card-scroll-hint {
+    bottom: -28px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Animations */
+@keyframes scrollHintShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes scrollHintPulse {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 8px);
+  }
+}
