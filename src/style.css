@@ -1399,3 +1399,33 @@ main {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(5px); }
 }
+
+@media (max-width: 640px) {
+  .portfolio-page .hero-section {
+    padding-top: 40px !important;
+    gap: 1rem !important; /* Slightly larger for breathing room */
+    justify-content: flex-start !important; /* Stack from top, no forced spacing */
+    padding-bottom: 2rem; /* Balance bottom space for buttons */
+  }
+  
+  .hero-profile-wrapper {
+    order: 1 !important;
+    margin-bottom: 1rem !important; /* Direct gap control after photo */
+    transform: none !important; /* Remove scale to fill naturally */
+    width: 100%;
+    max-width: 280px; /* Cap photo width */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-left {
+    order: 2 !important;
+    margin-bottom: auto; /* Push buttons down naturally */
+  }
+  
+  .hero-actions {
+    order: 3 !important;
+    margin-top: auto; /* Stick buttons to bottom */
+    padding-top: 1rem;
+  }
+}
