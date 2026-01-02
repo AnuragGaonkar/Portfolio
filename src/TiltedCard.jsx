@@ -143,13 +143,6 @@ export default function TiltedCard({
         )}
       </motion.div>
 
-      {showScrollHint && (
-        <div className="tilted-card-scroll-hint">
-          <span>Scroll down</span>
-          <span className="arrow">▾</span>
-        </div>
-      )}
-
       {showTooltip && (
         <motion.figcaption
           className="tilted-card-caption"
