@@ -567,3 +567,48 @@
     border-radius: 50px;
   }
 }
+
+.pc-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -32px; /* just below the card */
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #f4f0e8;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  animation: pc-scroll-hint-fade 0.4s ease-out forwards,
+             pc-scroll-hint-bounce 1.6s ease-in-out infinite 0.4s;
+  pointer-events: none; /* not clickable */
+  z-index: 3;
+}
+
+.pc-scroll-text {
+  text-transform: uppercase;
+}
+
+.pc-scroll-arrow {
+  font-size: 1rem;
+}
+
+/* Slightly smaller on very small screens */
+@media (max-width: 480px) {
+  .pc-scroll-hint {
+    bottom: -26px;
+    font-size: 0.7rem;
+  }
+}
+
+@keyframes pc-scroll-hint-fade {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes pc-scroll-hint-bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 6px); }
+}

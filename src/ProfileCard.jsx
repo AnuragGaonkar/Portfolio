@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import './ProfileCard.css';
 
 const DEFAULT_INNER_GRADIENT = 'linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)';
@@ -38,7 +38,7 @@ const ProfileCardComponent = ({
 }) => {
   const wrapRef = useRef(null);
   const shellRef = useRef(null);
-
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const enterTimerRef = useRef(null);
   const leaveRafRef = useRef(null);
 
@@ -261,6 +261,16 @@ const ProfileCardComponent = ({
       }
     };
     shell.addEventListener('click', handleClick);
+    useEffect(() => {
+      // Only show on small screens
+      if (window.innerWidth > 640) return;
+
+      const timer = setTimeout(() => {
+        setShowScrollHint(true);
+      }, 3000); // 3 seconds
+
+      return () => clearTimeout(timer);
+    }, []);
 
     const initialX = (shell.clientWidth || 0) - ANIMATION_CONFIG.INITIAL_X_OFFSET;
     const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
@@ -363,6 +373,12 @@ const ProfileCardComponent = ({
             </div>
           </div>
         </section>
+        {showScrollHint && (
+          <div className="pc-scroll-hint">
+            <span className="pc-scroll-text">Scroll down</span>
+            <span className="pc-scroll-arrow">▾</span>
+          </div>
+        )}
       </div>
     </div>
   );
