@@ -76,12 +76,12 @@ export default function TiltedCard({
 
   useEffect(() => {
     // Check if mobile
-    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    const isMobile = window.innerWidth <= 768;
     if (!isMobile) return;
 
     const timer = setTimeout(() => {
       setShowScrollHint(true);
-    }, 2500);
+    }, 500);
 
     // Hide hint if user starts scrolling
     const handleScroll = () => setShowScrollHint(false);
