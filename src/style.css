@@ -1325,3 +1325,42 @@ main {
     max-width: 280px;
   }
 }
+
+.global-scroll-hint {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999; /* Higher than everything else */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #c9a56a; /* Using your gold theme color */
+  font-family: serif; /* Matches your landing page style */
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  pointer-events: none;
+  animation: fadeInDown 0.6s ease-out forwards, pulseArrow 1.5s infinite;
+}
+
+.global-scroll-hint .arrow {
+  font-size: 1.2rem;
+  margin-top: -5px;
+}
+
+@keyframes fadeInDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes pulseArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
