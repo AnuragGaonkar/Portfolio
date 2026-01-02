@@ -79,33 +79,36 @@
   white-space: nowrap;
 }
 
-/* ... keep your existing TiltedCard.css above this ... */
-
-/* Add to end of TiltedCard.css - Mobile scroll hint only */
+/* Add/Update in TiltedCard.css */
 .tilted-card-scroll-hint {
   display: none; /* Hidden on desktop */
   position: absolute;
-  left: 50%;
-  bottom: -32px; /* hangs below card */
-  transform: translateX(-50%);
+  
+  /* Alignment to Top Right */
+  top: 10px;
+  right: 10px;
+  
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  color: #f4f0e8;
-  font-size: 0.75rem;
-  font-weight: 500;
+  color: #c9a56a; /* Gold color to match your theme */
+  font-size: 0.65rem;
+  font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   opacity: 0;
-  animation: scrollHintShow 0.4s ease-out 0.2s forwards,
-             scrollHintPulse 1.8s ease-in-out infinite 0.6s;
   pointer-events: none;
-  z-index: 10;
+  z-index: 20;
+  
+  /* Adjusted animation for the top corner */
+  animation: scrollHintShowTop 0.4s ease-out 0.2s forwards,
+             scrollHintPulseTop 1.8s ease-in-out infinite 0.6s;
 }
 
 .tilted-card-scroll-hint .arrow {
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1;
+  transform: rotate(180deg); /* Optional: point up if it's a 'scroll up' hint, keep normal for 'down' */
 }
 
 /* Mobile only */
@@ -115,31 +118,23 @@
   }
 }
 
-/* Very small screens */
-@media (max-width: 480px) {
-  .tilted-card-scroll-hint {
-    bottom: -28px;
-    font-size: 0.7rem;
-  }
-}
-
-/* Animations */
-@keyframes scrollHintShow {
+/* New Keyframes for Top-Right Positioning */
+@keyframes scrollHintShowTop {
   from {
     opacity: 0;
-    transform: translate(-50%, 10px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
 }
 
-@keyframes scrollHintPulse {
+@keyframes scrollHintPulseTop {
   0%, 100% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
   50% {
-    transform: translate(-50%, 8px);
+    transform: translateY(5px);
   }
 }
