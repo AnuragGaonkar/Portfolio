@@ -536,6 +536,7 @@ main {
     grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
     padding-top: 3.2rem;
+
   }
 
   .hero-right {
@@ -563,6 +564,7 @@ main {
     gap: 1.8rem;
     padding-inline: 5vw;
     padding-bottom: 2.8rem;
+    min-height: auto;
   }
 
   .hero-profile-wrapper {
@@ -714,8 +716,11 @@ main {
 
   /* Portfolio content starts BELOW navbar */
   .portfolio-page .hero-section {
-    padding-top: 100px;
-    min-height: 100vh;
+    padding-top: 60px !important; 
+    min-height: 100dvh; /* Use dynamic viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the text and buttons */
   }
 
   /* Smooth portfolio scroll */
