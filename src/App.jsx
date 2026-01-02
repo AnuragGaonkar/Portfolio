@@ -14,6 +14,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [formStatus, setFormStatus] = useState('');
   const [showCertOverlay, setShowCertOverlay] = useState(false);
+  const [showScrollBtn, setShowScrollBtn] = useState(true);
 
   // ✅ EMAILJS INIT
   useEffect(() => {
@@ -46,6 +47,11 @@ function App() {
       if (!root || isTransitioning) return;
       const y = window.scrollY;
       const vh = window.innerHeight;
+      if (y > 50) {
+        setShowScrollBtn(false);
+      } else {
+        setShowScrollBtn(true);
+      }
 
       if (y > 5 && !root.classList.contains("letter-opened")) {
         isTransitioning = true;
@@ -229,9 +235,53 @@ function App() {
     { title: "Hadoop", description: "Big data processing and distributed computing.", link: "/certificates/Hadoop_Certification.pdf" },
     { title: "RAG & GenAI", description: "Advanced Retrieval Augmented Generation and LLMs.", link: "/certificates/Rag.pdf" },
   ];
-
   return (
     <div className="page-root">
+      <AnimatePresence>
+        {isMobile && showScrollBtn && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed',
+              top: '30px',
+              right: '25px',
+              zIndex: 9999,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '8px',
+              pointerEvents: 'none' // Makes it a "sign" only, not a clickable button
+            }}
+          >
+            {/* The Label */}
+            <span style={{ 
+              color: '#c9a56a', 
+              fontSize: '10px', 
+              letterSpacing: '2px', 
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+              writingMode: 'vertical-rl', // Vertical text looks very "Ink/Zen"
+              opacity: 0.8
+            }}>
+              Scroll
+            </span>
+
+            {/* The Animated Line/Arrow */}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              style={{
+                width: '1px',
+                height: '30px',
+                background: 'linear-gradient(to bottom, #c9a56a, transparent)',
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {isMobile && (
         <CardNav 
           items={navItems} 
