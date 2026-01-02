@@ -15,6 +15,7 @@ function App() {
   const [formStatus, setFormStatus] = useState('');
   const [showCertOverlay, setShowCertOverlay] = useState(false);
   const [showGlobalHint, setShowGlobalHint] = useState(false);
+  const hintRef = useRef(null);
   // ✅ EMAILJS INIT
   useEffect(() => {
     emailjs.init('112QULphEAjJAlwB3');
@@ -47,10 +48,14 @@ function App() {
       const y = window.scrollY;
       const vh = window.innerHeight;
 
+      if (y > 10 && hintRef.current) {
+        hintRef.current.style.opacity = "0";
+        hintRef.current.style.pointerEvents = "none";
+      }
+
       if (y > 5 && !root.classList.contains("letter-opened")) {
         isTransitioning = true;
         root.classList.add("letter-opened");
-        setShowGlobalHint(false);
         window.scrollTo({
           top: vh,
           behavior: 'smooth'
@@ -96,6 +101,18 @@ function App() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", triggerAnimations);
     };
+  }, []);
+  
+  useEffect(() => {
+    // Only trigger hint if at top of page and on mobile
+    if (window.innerWidth <= 640 && window.scrollY < 10) {
+      const timer = setTimeout(() => {
+        if (hintRef.current) {
+          hintRef.current.style.opacity = "1";
+        }
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // ================= NAV ITEMS =================
@@ -252,12 +269,14 @@ function App() {
           className="mobile-card-nav"
         />
       )}
-      {showGlobalHint && !document.querySelector('.page-root')?.classList.contains('letter-opened') && (
-        <div className="global-scroll-hint">
-          <span>Scroll Down</span>
-          <div className="arrow">▾</div>
-        </div>
-      )}
+      <div 
+        ref={hintRef} 
+        className="global-scroll-hint"
+        style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+      >
+        <span>Scroll Down</span>
+        <div className="arrow">▾</div>
+      </div>
       {/* PAGE 1: full-screen profile cover */}
       <section className="page profile-page transition-shell">
         <div className="profile-page-inner">
