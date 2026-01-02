@@ -716,11 +716,15 @@ main {
 
   /* Portfolio content starts BELOW navbar */
   .portfolio-page .hero-section {
-    padding-top: 60px !important; 
-    min-height: 100dvh; /* Use dynamic viewport height */
+    /* 1. Reduce top padding so content starts higher */
+    padding-top: 40px !important; 
+    /* 2. Change min-height to allow buttons to stay in viewport */
+    min-height: calc(100dvh - 60px); 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centers the text and buttons */
+    /* 3. Space items out evenly so buttons are at the bottom of the screen */
+    justify-content: space-evenly; 
+    gap: 0.5rem;
   }
 
   /* Smooth portfolio scroll */
@@ -862,14 +866,35 @@ main {
   [data-aos] {
     animation-fill-mode: both !important;
   }
-  
+  .hero-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: nowrap; /* Keep buttons side-by-side */
+    gap: 12px;
+    z-index: 10;
+    position: relative;
+    justify-content: center;
+  }
+
+  .hero-profile-wrapper {
+    /* 5. Scale down the image slightly so it leaves room for text/buttons */
+    transform: scale(0.85); 
+    margin-top: -20px;
+  }
   /* Force content above fold */
   .hero-section,
   .section {
     opacity: 1 !important; /* Load instantly */
     visibility: visible !important;
   }
-  
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* 4. Ensure this container doesn't take 100% height */
+    flex: 0 1 auto; 
+  }
   /* Images load instantly */
   img {
     loading: eager !important;
@@ -1065,6 +1090,17 @@ main {
     font-size: 1.8rem;
     width: 36px;
     height: 36px;
+  }
+}
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2rem; /* Make title slightly smaller on mobile */
+    margin-bottom: 0.2rem;
+  }
+  .hero-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
   }
 }
 .architecture-img {
