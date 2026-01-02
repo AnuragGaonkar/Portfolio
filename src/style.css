@@ -91,9 +91,9 @@ body {
 
 /* Page layout glass overlay */
 .page-root {
+  min-height: 100dvh;
   position: relative;
   z-index: 1;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: transparent;
@@ -663,6 +663,7 @@ main {
 
   .page {
     height: 100vh !important;
+    height: 100dvh !important;
     margin: 0 !important;
     padding: 0 !important;
   }

@@ -46,7 +46,7 @@ function App() {
     const onScroll = () => {
       if (!root || isTransitioning) return;
       const y = window.scrollY;
-      const vh = window.innerHeight;
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
       if (y > 10) {
         setShowScrollBtn(false);
       } else {
