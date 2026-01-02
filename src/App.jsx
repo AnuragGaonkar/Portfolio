@@ -47,7 +47,7 @@ function App() {
       if (!root || isTransitioning) return;
       const y = window.scrollY;
       const vh = window.innerHeight;
-      if (y > 50) {
+      if (y > 10) {
         setShowScrollBtn(false);
       } else {
         setShowScrollBtn(true);
