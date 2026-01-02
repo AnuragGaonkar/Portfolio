@@ -14,7 +14,6 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [formStatus, setFormStatus] = useState('');
   const [showCertOverlay, setShowCertOverlay] = useState(false);
-  const [showGlobalHint, setShowGlobalHint] = useState(false);
   const hintRef = useRef(null);
   // ✅ EMAILJS INIT
   useEffect(() => {
@@ -48,16 +47,9 @@ function App() {
       const y = window.scrollY;
       const vh = window.innerHeight;
 
-      if (y > 10) {
-        // 1. Instantly hide via DOM for zero-lag feedback
-        if (hintRef.current) {
-          hintRef.current.style.opacity = "0";
-          hintRef.current.style.pointerEvents = "none";
-        }
-        // 2. Update state so React knows it's closed (prevents it coming back on re-render)
-        if (showGlobalHint) {
-          setShowGlobalHint(false);
-        }
+      if (y > 2 && hintRef.current) {
+        hintRef.current.style.opacity = "0";
+        setHasScrolled(true); // This prevents the timer from ever showing it again
       }
 
       if (y > 5 && !root.classList.contains("letter-opened")) {
@@ -109,19 +101,38 @@ function App() {
       window.removeEventListener("resize", triggerAnimations);
     };
   }, []);
+  // Add this state to track if the user has EVER scrolled
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    // Only trigger hint if at top of page and on mobile
-    if (window.innerWidth <= 640 && window.scrollY < 10) {
-      const timer = setTimeout(() => {
-        if (hintRef.current) {
-          hintRef.current.style.opacity = "1";
-        }
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+    const isMobile = window.innerWidth <= 640;
+    if (!isMobile) return;
 
+    // Show the hint only if they haven't scrolled yet
+    const timer = setTimeout(() => {
+      if (window.scrollY < 10 && !hasScrolled && hintRef.current) {
+        hintRef.current.style.opacity = "1";
+      }
+    }, 1500);
+
+    const handleScrollHide = () => {
+      if (window.scrollY > 10) {
+        setHasScrolled(true); // Mark as scrolled
+        if (hintRef.current) {
+          hintRef.current.style.opacity = "0";
+          hintRef.current.style.pointerEvents = "none";
+        }
+        // Once hidden, we can remove this specific listener
+        window.removeEventListener("scroll", handleScrollHide);
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollHide, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScrollHide);
+    };
+  }, [hasScrolled]);
   // ================= NAV ITEMS =================
   const navItems = [
     { 
@@ -262,6 +273,8 @@ function App() {
     }
   }, []);
 
+  // Add this to your onScroll function inside App.jsx to hide it when user moves
+  if (window.scrollY > 20) setShowGlobalHint(false);
 
   return (
     <div className="page-root">
@@ -274,16 +287,14 @@ function App() {
           className="mobile-card-nav"
         />
       )}
-      {showGlobalHint && (
-        <div 
-          ref={hintRef} 
-          className="global-scroll-hint"
-          style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
-        >
-          <span>Scroll Down</span>
-          <div className="arrow">▾</div>
-        </div>
-      )}
+      <div 
+        ref={hintRef} 
+        className="global-scroll-hint"
+        style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+      >
+        <span>Scroll Down</span>
+        <div className="arrow">▾</div>
+      </div>
       {/* PAGE 1: full-screen profile cover */}
       <section className="page profile-page transition-shell">
         <div className="profile-page-inner">
