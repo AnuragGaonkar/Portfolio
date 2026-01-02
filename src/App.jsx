@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import AOS from "aos";
@@ -102,7 +102,7 @@ function App() {
       window.removeEventListener("resize", triggerAnimations);
     };
   }, []);
-  
+
   useEffect(() => {
     // Only trigger hint if at top of page and on mobile
     if (window.innerWidth <= 640 && window.scrollY < 10) {
@@ -255,8 +255,6 @@ function App() {
     }
   }, []);
 
-  // Add this to your onScroll function inside App.jsx to hide it when user moves
-  if (window.scrollY > 20) setShowGlobalHint(false);
 
   return (
     <div className="page-root">
