@@ -48,9 +48,16 @@ function App() {
       const y = window.scrollY;
       const vh = window.innerHeight;
 
-      if (y > 10 && hintRef.current) {
-        hintRef.current.style.opacity = "0";
-        hintRef.current.style.pointerEvents = "none";
+      if (y > 10) {
+        // 1. Instantly hide via DOM for zero-lag feedback
+        if (hintRef.current) {
+          hintRef.current.style.opacity = "0";
+          hintRef.current.style.pointerEvents = "none";
+        }
+        // 2. Update state so React knows it's closed (prevents it coming back on re-render)
+        if (showGlobalHint) {
+          setShowGlobalHint(false);
+        }
       }
 
       if (y > 5 && !root.classList.contains("letter-opened")) {
@@ -267,14 +274,16 @@ function App() {
           className="mobile-card-nav"
         />
       )}
-      <div 
-        ref={hintRef} 
-        className="global-scroll-hint"
-        style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
-      >
-        <span>Scroll Down</span>
-        <div className="arrow">▾</div>
-      </div>
+      {showGlobalHint && (
+        <div 
+          ref={hintRef} 
+          className="global-scroll-hint"
+          style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+        >
+          <span>Scroll Down</span>
+          <div className="arrow">▾</div>
+        </div>
+      )}
       {/* PAGE 1: full-screen profile cover */}
       <section className="page profile-page transition-shell">
         <div className="profile-page-inner">
