@@ -339,9 +339,6 @@ function App() {
                 <a href="#projects" className="btn primary-btn">
                   View Quests
                 </a>
-                <a href="#contact" className="btn ghost-btn">
-                  Contact
-                </a>
               </div>
             </div>
 
