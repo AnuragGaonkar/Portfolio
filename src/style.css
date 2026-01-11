@@ -386,8 +386,10 @@ main {
 .section-text {
   max-width: 40rem;
   line-height: 1.7;
-  font-size: 0.96rem;
-  color: var(--text-muted);
+  font-size: 1.05rem; /* Slightly larger */
+  font-weight: 600;    /* Semi-bold for better readability on dark bg */
+  color: var(--text-main); /* Brighter than muted */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Adds contrast */
 }
 
 /* Skills grid */
