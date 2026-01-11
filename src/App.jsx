@@ -366,17 +366,16 @@ function App() {
             <p className="section-text">
               I am pursuing a Bachelor of Engineering in Artificial Intelligence
               and Data Science at Thadomal Shahani Engineering College, Mumbai,
-              graduating in 2026 with a current CGPA of 9.32. My core focus is
+              graduating in 2026 with a current CGPA of 9.25. My core focus is
               designing and delivering production‑ready AI and web systems that
               perform well under real constraints.
             </p>
             <p className="section-text">
               I see myself as a full‑stack developer with a strong inclination
               towards AI integration. On the development side, I work primarily
-              with the MERN stack—React for frontend, Node.js and Express for
-              backend, and MongoDB for data—while also using Java and Spring Boot
-              for more enterprise‑level systems and working with databases like
-              MySQL, Oracle, and SQLite.
+              with the MERN stack, React for frontend, Node.js and Express for
+              backend, and MongoDB for data, while also using Java and working with databases like
+              MySQL.
             </p>
             <p className="section-text">
               On the AI side, I work extensively with Python, PyTorch, and more
