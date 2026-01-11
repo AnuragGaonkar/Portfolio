@@ -397,8 +397,7 @@ function App() {
               <div className="skill-card">
                 <h3>Languages</h3>
                 <ul>
-                  <li>Python, Java, JavaScript</li>
-                  <li>SQL</li>
+                  <li>Python, Java, SQL</li>
                 </ul>
               </div>
               <div className="skill-card">
@@ -407,7 +406,6 @@ function App() {
                   <li>React.js, Node.js, Express.js</li>
                   <li>REST APIs, JSON</li>
                   <li>Authentication & Authorization (JWT, RBAC)</li>
-                  <li>Spring Boot</li>
                 </ul>
               </div>
               <div className="skill-card">
@@ -421,9 +419,8 @@ function App() {
               <div className="skill-card">
                 <h3>Databases & Tools</h3>
                 <ul>
-                  <li>MongoDB, MySQL, Oracle, SQLite</li>
-                  <li>GitHub, Firebase, Postman</li>
-                  <li>Hackathons & team collaboration</li>
+                  <li>MongoDB, MySQL, GitHub</li>
+                  <li>Firebase, Postman</li>
                 </ul>
               </div>
             </div>
